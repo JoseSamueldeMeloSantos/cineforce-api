@@ -1,10 +1,12 @@
 package br.com.bth8.cineforce.mapper;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ObjectMapper {
 
     private final ModelMapper mapper;

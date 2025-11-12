@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -31,46 +32,64 @@ public class MovieController {
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public MovieDTO create(@RequestBody MovieDTO dto) {
-        return service.create(dto);
+    public ResponseEntity<MovieDTO> create(@RequestBody MovieDTO dto) {
+        MovieDTO created = service.create(dto);
+        return ResponseEntity.status(201).body(created); // 201 Created
     }
 
     @GetMapping(
-            value = "/{id}",
+            value = "/id/{id}",
             produces = {
                     MediaType.APPLICATION_JSON_VALUE,
                     MediaType.APPLICATION_XML_VALUE,
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public MovieDTO findById(@PathVariable("id") UUID id)
-            throws EnitityNotFoundException {
-        return service.findById(id);
+    public ResponseEntity<MovieDTO> findById(@PathVariable UUID id) throws EnitityNotFoundException {
+        MovieDTO movie = service.findById(id);
+        return ResponseEntity.ok(movie); // 200 OK
     }
 
     @GetMapping(
-            value = "/{name}",
+            value = "/name/{name}",
             produces = {
-                MediaType.APPLICATION_JSON_VALUE,
-                MediaType.APPLICATION_XML_VALUE,
-                MediaType.APPLICATION_YAML_VALUE
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public MovieDTO findByName(@PathVariable("name") String name) throws EnitityNotFoundException {
-        return service.findByName(name);
+    public ResponseEntity<MovieDTO> findByName(@PathVariable String name) throws EnitityNotFoundException {
+        MovieDTO movie = service.findByName(name);
+        return ResponseEntity.ok(movie);
+    }
+
+    @PatchMapping(
+            value = "/{id}",
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE
+            },
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE
+            }
+    )
+    public ResponseEntity<MovieDTO> updatePartiality(
+            @PathVariable UUID id,
+            @RequestBody Map<String, Object> fields
+    ) {
+        MovieDTO updated = service.updatePartiality(id, fields);
+        return ResponseEntity.ok(updated); // 200 OK
     }
 
     @DeleteMapping(
-            value = "/{id}",
-            produces = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE,
-                    MediaType.APPLICATION_YAML_VALUE
-            }
+            value = "/{id}"
     )
-    public ResponseEntity<?> delete(@PathVariable("id") UUID id) throws EnitityNotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) throws EnitityNotFoundException {
         service.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build(); // 204 No Content
     }
 
 }

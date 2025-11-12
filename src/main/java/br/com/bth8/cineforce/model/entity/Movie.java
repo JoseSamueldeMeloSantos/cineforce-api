@@ -43,8 +43,8 @@ public class Movie {
     @Column(nullable = false)
     private Double price;
 
-    @CollectionTable
-    private Set<String> cast;
+    @Column(name = "movie_cast")
+    private String[] movieCast;
 
     @Column
     private  String director;
