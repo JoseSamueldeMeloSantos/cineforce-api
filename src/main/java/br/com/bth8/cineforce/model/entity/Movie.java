@@ -49,5 +49,8 @@ public class Movie {
     @Column
     private  String director;
 
+    @Column
+    private String duration;
+
 
 }

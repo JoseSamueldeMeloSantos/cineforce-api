@@ -25,6 +25,6 @@ public class MovieController {
             }
     )
     public MovieDTO create(@RequestBody MovieDTO dto) {
-
+        return service.create(dto);
     }
 }
