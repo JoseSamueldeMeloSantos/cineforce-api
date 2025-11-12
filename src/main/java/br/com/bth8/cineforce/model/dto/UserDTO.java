@@ -1,9 +1,10 @@
 package br.com.bth8.cineforce.model.dto;
 
+import br.com.bth8.cineforce.model.entity.Movie;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -19,27 +20,21 @@ import java.util.UUID;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieDTO {
+public class UserDTO {
 
     private UUID id;
 
-    private String name;
+    @JsonProperty("nick_name")
+    private String nickName;
 
-    @JsonProperty("release_date")
+    private String email;
+
+    private String bio;
+
+    @JsonProperty("birth_date")
     @JsonFormat(timezone = "dd/mm/yyyy")
-    private LocalDate releaseDate;
+    private LocalDate birthDate;
 
-    @JsonProperty("age_rating")
-    private String ageRating;
-
-    private String description;
-
-    private Double price;
-
-    private Set<String> cast;
-
-    private  String director;
-
-    private String duration;
-
+    @JsonProperty("purchased_movies")
+    private Set<Movie> purchasedMovies;
 }

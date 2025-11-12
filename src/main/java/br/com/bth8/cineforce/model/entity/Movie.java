@@ -14,9 +14,9 @@ import java.util.UUID;
 
 
 @Data
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Entity
 @Table(name = "movies")
 public class Movie {
