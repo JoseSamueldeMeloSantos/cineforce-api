@@ -4,10 +4,9 @@ import br.com.bth8.cineforce.model.dto.MovieDTO;
 import br.com.bth8.cineforce.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 
 @RestController
@@ -22,9 +21,26 @@ public class MovieController {
                     MediaType.APPLICATION_JSON_VALUE,
                     MediaType.APPLICATION_XML_VALUE,
                     MediaType.APPLICATION_YAML_VALUE
+            },
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE
             }
     )
     public MovieDTO create(@RequestBody MovieDTO dto) {
         return service.create(dto);
+    }
+
+    @GetMapping(
+            value = "/{id}",
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE
+            }
+    )
+    public MovieDTO findById(@PathVariable("id") UUID id) {
+        return service.findById(id);
     }
 }
