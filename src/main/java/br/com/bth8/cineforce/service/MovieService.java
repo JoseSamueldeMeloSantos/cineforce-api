@@ -1,5 +1,6 @@
 package br.com.bth8.cineforce.service;
 
+import br.com.bth8.cineforce.exception.EntityAlreadyExistsException;
 import br.com.bth8.cineforce.mapper.ObjectMapper;
 import br.com.bth8.cineforce.model.dto.MovieDTO;
 import br.com.bth8.cineforce.model.entity.Movie;
@@ -20,9 +21,10 @@ public class MovieService {
     public MovieDTO create(MovieDTO movie) {
 
         if (repository.findByName(movie.getName()).isPresent()) {
-            log.warn("Movie Already exist");
+            new EntityAlreadyExistsException();
         }
 
+        log.info("creating movie");
         Movie enity = mapper.parseObject(movie, Movie.class);
         MovieDTO dto = mapper.parseObject(repository.save(enity),MovieDTO.class);
 
