@@ -6,6 +6,7 @@ import br.com.bth8.cineforce.model.entity.Movie;
 import br.com.bth8.cineforce.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -55,7 +56,21 @@ public class MovieController {
                 MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public MovieDTO findByName(@PathVariable("name") String name) {
+    public MovieDTO findByName(@PathVariable("name") String name) throws EnitityNotFoundException {
         return service.findByName(name);
     }
+
+    @DeleteMapping(
+            value = "/{id}",
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE
+            }
+    )
+    public ResponseEntity<?> delete(@PathVariable("id") UUID id) throws EnitityNotFoundException {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

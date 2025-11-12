@@ -29,7 +29,7 @@ public class MovieService {
             new EntityAlreadyExistsException();
         }
 
-        Movie enity = mapper.parseObject(movie, Movie.class);
+        var enity = mapper.parseObject(movie, Movie.class);
         MovieDTO dto = mapper.parseObject(repository.save(enity),MovieDTO.class);
 
         return dto;
@@ -39,8 +39,19 @@ public class MovieService {
 
         log.info("finding a movie by his ID");
 
-        Movie entity = repository.findById(id).
+        var entity = repository.findById(id).
                 orElseThrow(() -> new EnitityNotFoundException("Movie Not Found Exception"));
+
+        MovieDTO dto = mapper.parseObject(entity, MovieDTO.class);
+
+        return dto;
+    }
+    
+    public MovieDTO findByName(String name) throws EnitityNotFoundException {
+        log.info("finding a movie by his ID");
+
+        var entity = repository.findByName(name)
+                .orElseThrow(() -> new EnitityNotFoundException("Movie Not Found Exception"));
 
         MovieDTO dto = mapper.parseObject(entity, MovieDTO.class);
 
@@ -48,14 +59,13 @@ public class MovieService {
     }
 
 
-    public MovieDTO findByName(String name) throws EnitityNotFoundException {
-        log.info("finding a movie by his ID");
+    public void delete(UUID id) throws EnitityNotFoundException {
 
-        Movie entity = repository.findByName(name)
-                .orElseThrow(() -> new EnitityNotFoundException("Movie Not Found Exception"));
+        log.info("deteleting a movie by his ID");
 
-        MovieDTO dto = mapper.parseObject(entity, MovieDTO.class);
+        var entity = repository.findById(id)
+                .orElseThrow(() -> new EnitityNotFoundException());
 
-        return dto;
+        repository.delete(entity);
     }
 }
