@@ -48,4 +48,14 @@ public class MovieService {
     }
 
 
+    public MovieDTO findByName(String name) throws EnitityNotFoundException {
+        log.info("finding a movie by his ID");
+
+        Movie entity = repository.findByName(name)
+                .orElseThrow(() -> new EnitityNotFoundException("Movie Not Found Exception"));
+
+        MovieDTO dto = mapper.parseObject(entity, MovieDTO.class);
+
+        return dto;
+    }
 }

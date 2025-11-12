@@ -1,6 +1,8 @@
 package br.com.bth8.cineforce.controller;
 
+import br.com.bth8.cineforce.exception.EnitityNotFoundException;
 import br.com.bth8.cineforce.model.dto.MovieDTO;
+import br.com.bth8.cineforce.model.entity.Movie;
 import br.com.bth8.cineforce.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -40,7 +42,20 @@ public class MovieController {
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public MovieDTO findById(@PathVariable("id") UUID id) {
+    public MovieDTO findById(@PathVariable("id") UUID id)
+            throws EnitityNotFoundException {
         return service.findById(id);
+    }
+
+    @GetMapping(
+            value = "/{name}",
+            produces = {
+                MediaType.APPLICATION_JSON_VALUE,
+                MediaType.APPLICATION_XML_VALUE,
+                MediaType.APPLICATION_YAML_VALUE
+            }
+    )
+    public MovieDTO findByName(@PathVariable("name") String name) {
+        return service.findByName(name);
     }
 }
