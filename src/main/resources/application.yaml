@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: cineforce-api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cineforce
+    username: root
+    password: 15032002
+
