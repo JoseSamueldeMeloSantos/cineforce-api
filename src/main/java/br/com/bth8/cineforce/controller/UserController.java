@@ -43,7 +43,7 @@ public class UserController {
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public ResponseEntity<UserDTO> findById(@PathVariable UUID id) throws EnitityNotFoundException {
+    public ResponseEntity<UserDTO> findById(@PathVariable UUID id) {
         UserDTO movie = service.findById(id);
         return ResponseEntity.ok(movie); // 200 OK
     }
@@ -72,7 +72,7 @@ public class UserController {
     @DeleteMapping(
             value = "/{id}"
     )
-    public ResponseEntity<Void> delete(@PathVariable UUID id) throws EnitityNotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build(); // 204 No Content
     }

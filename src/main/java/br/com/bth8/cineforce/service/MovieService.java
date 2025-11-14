@@ -42,7 +42,7 @@ public class MovieService {
     @Autowired
     private PagedResourcesAssembler<MovieDTO> assembler;
 
-    public MovieDTO create(MovieDTO movie) throws EnitityNotFoundException {
+    public MovieDTO create(MovieDTO movie) {
         log.info("creating movie");
 
         if (repository.findByName(movie.getName()).isPresent()) {
@@ -82,7 +82,7 @@ public class MovieService {
         return assembler.toModel(moviesDtoWithHateoas, findAllLinks);
     }
 
-    public MovieDTO findById(UUID id) throws EnitityNotFoundException {
+    public MovieDTO findById(UUID id) {
 
         log.info("finding a movie by his ID");
 
@@ -96,7 +96,7 @@ public class MovieService {
         return dto;
     }
     
-    public MovieDTO findByName(String name) throws EnitityNotFoundException {
+    public MovieDTO findByName(String name) {
         log.info("finding a movie by his ID");
 
         var entity = repository.findByName(name)
@@ -110,7 +110,7 @@ public class MovieService {
     }
 
 
-    public void delete(UUID id) throws EnitityNotFoundException {
+    public void delete(UUID id) {
 
         log.info("deteleting a movie by his ID");
 
@@ -121,7 +121,7 @@ public class MovieService {
     }
 
 
-    public MovieDTO updatePartiality(UUID id, Map<String, Object> fields) throws EnitityNotFoundException {
+    public MovieDTO updatePartiality(UUID id, Map<String, Object> fields) {
 
         log.info("updating some fields");
 
@@ -143,7 +143,7 @@ public class MovieService {
         return dto;
     }
 
-    public MovieDTO update(MovieDTO dto) throws EnitityNotFoundException {
+    public MovieDTO update(MovieDTO dto) {
         log.info("Updating a complete object");
 
         var entity = repository.findById(dto.getId())
@@ -164,7 +164,7 @@ public class MovieService {
         return mdto;
     }
 
-    private void  addHateoasLinks(MovieDTO dto) throws EnitityNotFoundException {
+    private void  addHateoasLinks(MovieDTO dto) {
 
         dto.add(linkTo(methodOn(MovieController.class).findById(dto.getId())).withSelfRel().withType("GET"));
 

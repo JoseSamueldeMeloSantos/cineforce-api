@@ -58,7 +58,7 @@ public class MovieController {
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public ResponseEntity<MovieDTO> create(@RequestBody MovieDTO dto) throws EnitityNotFoundException {
+    public ResponseEntity<MovieDTO> create(@RequestBody MovieDTO dto) {
         MovieDTO created = service.create(dto);
         return ResponseEntity.status(201).body(created); // 201 Created
     }
@@ -71,7 +71,7 @@ public class MovieController {
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public ResponseEntity<MovieDTO> findById(@PathVariable UUID id) throws EnitityNotFoundException {
+    public ResponseEntity<MovieDTO> findById(@PathVariable UUID id) {
         MovieDTO movie = service.findById(id);
         return ResponseEntity.ok(movie); // 200 OK
     }
@@ -84,7 +84,7 @@ public class MovieController {
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public ResponseEntity<MovieDTO> findByName(@PathVariable String name) throws EnitityNotFoundException {
+    public ResponseEntity<MovieDTO> findByName(@PathVariable String name) {
         MovieDTO movie = service.findByName(name);
         return ResponseEntity.ok(movie);
     }
@@ -105,7 +105,7 @@ public class MovieController {
     public ResponseEntity<MovieDTO> updatePartiality(
             @PathVariable UUID id,
             @RequestBody Map<String, Object> fields
-    ) throws EnitityNotFoundException {
+    ) {
         MovieDTO updated = service.updatePartiality(id, fields);
         return ResponseEntity.ok(updated); // 200 OK
     }
@@ -122,14 +122,14 @@ public class MovieController {
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public ResponseEntity<MovieDTO> update(MovieDTO dto) throws EnitityNotFoundException {
+    public ResponseEntity<MovieDTO> update(MovieDTO dto) {
         return ResponseEntity.ok(service.update(dto));
     }
 
     @DeleteMapping(
             value = "/{id}"
     )
-    public ResponseEntity<Void> delete(@PathVariable UUID id) throws EnitityNotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build(); // 204 No Content
     }

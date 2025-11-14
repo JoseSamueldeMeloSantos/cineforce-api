@@ -1,8 +1,11 @@
 package br.com.bth8.cineforce.service;
 
+import br.com.bth8.cineforce.controller.MovieController;
+import br.com.bth8.cineforce.controller.UserController;
 import br.com.bth8.cineforce.exception.EnitityNotFoundException;
 import br.com.bth8.cineforce.exception.EntityAlreadyExistsException;
 import br.com.bth8.cineforce.mapper.ObjectMapper;
+import br.com.bth8.cineforce.model.dto.MovieDTO;
 import br.com.bth8.cineforce.model.dto.UserDTO;
 import br.com.bth8.cineforce.model.entity.User;
 import br.com.bth8.cineforce.repository.UserRepository;
@@ -15,6 +18,9 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.UUID;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 @Slf4j
@@ -35,10 +41,12 @@ public class UserService {
         var entity = mapper.parseObject(user, User.class);
         UserDTO dto = mapper.parseObject(repository.save(entity),UserDTO.class);
 
+        addHateoasLinks(dto);
+
         return dto;
     }
 
-    public UserDTO findById(UUID id) throws EnitityNotFoundException {
+    public UserDTO findById(UUID id) {
 
         log.info("finding a user by his ID");
 
@@ -47,11 +55,13 @@ public class UserService {
 
         UserDTO dto = mapper.parseObject(entity, UserDTO.class);
 
+        addHateoasLinks(dto);
+
         return dto;
     }
 
 
-    public void delete(UUID id) throws EnitityNotFoundException {
+    public void delete(UUID id) {
 
         log.info("deteleting a user by his ID");
 
@@ -75,6 +85,20 @@ public class UserService {
             }
         });
 
-        return mapper.parseObject(repository.save(user), UserDTO.class);
+        UserDTO dto =  mapper.parseObject(repository.save(user), UserDTO.class);
+        addHateoasLinks(dto);
+
+        return dto;
+    }
+
+    private void  addHateoasLinks(UserDTO dto) {
+
+        dto.add(linkTo(methodOn(UserController.class).findById(dto.getId())).withSelfRel().withType("GET"));
+
+        dto.add(linkTo(methodOn(UserController.class).create(dto)).withRel("create").withType("POST"));
+
+        dto.add(linkTo(methodOn(UserController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
+
+        dto.add(linkTo(methodOn(UserController.class).updatePartiality(dto.getId(), Map.of())).withRel("updatePartiality").withType("PATCH"));
     }
 }
