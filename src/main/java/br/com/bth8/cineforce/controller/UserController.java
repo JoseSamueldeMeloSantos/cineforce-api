@@ -32,7 +32,7 @@ public class UserController {
     )
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO dto) {
         UserDTO created = service.create(dto);
-        return ResponseEntity.status(201).body(created); // 201 Created
+        return ResponseEntity.ok(created); // 201 Created
     }
 
     @GetMapping(

@@ -2,9 +2,14 @@ package br.com.bth8.cineforce.controller;
 
 import br.com.bth8.cineforce.exception.EnitityNotFoundException;
 import br.com.bth8.cineforce.model.dto.MovieDTO;
-import br.com.bth8.cineforce.model.entity.Movie;
 import br.com.bth8.cineforce.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +25,27 @@ public class MovieController {
     @Autowired
     private MovieService service;
 
+    @GetMapping(
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE
+            }
+    )
+    public ResponseEntity<PagedModel<EntityModel<MovieDTO>>> findAll(
+        @RequestParam(value = "page", defaultValue = "0") Integer page,
+        @RequestParam(value = "size", defaultValue = "15") Integer size,
+        @RequestParam(value = "direction", defaultValue = "asc") String direction,
+        @RequestParam(value = "sort_Reference", defaultValue = "name") String sortReference
+    ) {
+        Direction sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortReference));
+
+        return ResponseEntity.ok(service.findAll(pageable, sortReference));
+    }
+
     @PostMapping(
             consumes = {
                     MediaType.APPLICATION_JSON_VALUE,
@@ -32,7 +58,7 @@ public class MovieController {
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public ResponseEntity<MovieDTO> create(@RequestBody MovieDTO dto) {
+    public ResponseEntity<MovieDTO> create(@RequestBody MovieDTO dto) throws EnitityNotFoundException {
         MovieDTO created = service.create(dto);
         return ResponseEntity.status(201).body(created); // 201 Created
     }
@@ -79,9 +105,25 @@ public class MovieController {
     public ResponseEntity<MovieDTO> updatePartiality(
             @PathVariable UUID id,
             @RequestBody Map<String, Object> fields
-    ) {
+    ) throws EnitityNotFoundException {
         MovieDTO updated = service.updatePartiality(id, fields);
         return ResponseEntity.ok(updated); // 200 OK
+    }
+
+    @PutMapping(
+            consumes = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE
+            },
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE
+            }
+    )
+    public ResponseEntity<MovieDTO> update(MovieDTO dto) throws EnitityNotFoundException {
+        return ResponseEntity.ok(service.update(dto));
     }
 
     @DeleteMapping(
@@ -91,5 +133,7 @@ public class MovieController {
         service.delete(id);
         return ResponseEntity.noContent().build(); // 204 No Content
     }
+
+
 
 }

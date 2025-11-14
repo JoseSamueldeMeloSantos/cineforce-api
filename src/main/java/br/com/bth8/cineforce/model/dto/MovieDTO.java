@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -19,7 +21,8 @@ import java.util.UUID;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieDTO {
+@Relation(collectionRelation = "movies")
+public class MovieDTO extends RepresentationModel<MovieDTO> {
 
     private UUID id;
 
@@ -36,7 +39,7 @@ public class MovieDTO {
 
     private Double price;
 
-    private Set<String> cast;
+    private String[] movieCast;
 
     private  String director;
 
