@@ -36,6 +36,15 @@ public class Movie {
     @Column(name = "age_rating")
     private String ageRating;
 
+    @Column(name = "movie_link")
+    private String movieLink;
+
+    @Column(name = "addition_date")
+    private LocalDate additionDate;
+
+    @Column
+    private String genre;
+
     @Column
     private String description;
 

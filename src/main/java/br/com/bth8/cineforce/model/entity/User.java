@@ -42,7 +42,15 @@ public class User {
     @Column
     private LocalDate birthDate;
 
-    @OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "purchased_movies_fk")
+    @ManyToMany
+    @JoinTable(
+            name = "user_movies",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id")
+    )
     private Set<Movie> purchasedMovies;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 }

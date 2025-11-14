@@ -37,6 +37,14 @@ public class MovieDTO extends RepresentationModel<MovieDTO> {
 
     private String description;
 
+    @JsonProperty("movie_link")
+    private String movieLink;
+
+    @JsonProperty("addition_date")
+    private LocalDate additionDate;
+
+    private String genre;
+
     private Double price;
 
     private String[] movieCast;

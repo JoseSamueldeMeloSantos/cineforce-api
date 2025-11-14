@@ -157,6 +157,9 @@ public class MovieService {
         entity.setMovieCast(dto.getMovieCast());
         entity.setDirector(dto.getDirector());
         entity.setDuration(dto.getDuration());
+        entity.setGenre(dto.getGenre());
+        entity.setMovieLink(dto.getMovieLink());
+        entity.setAdditionDate(dto.getAdditionDate());
 
         MovieDTO mdto = mapper.parseObject(repository.save(entity),MovieDTO.class);
         addHateoasLinks(mdto);

@@ -1,5 +1,6 @@
-package br.com.bth8.cineforce.model.entity;
+package br.com.bth8.cineforce.model.dto;
 
+import br.com.bth8.cineforce.model.entity.CartItem;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -11,23 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
 @Data
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "carts")
-public class Cart {
+public class CartDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+
     private UUID uuid;
 
-    @NotNull
-    @Column(nullable = false)
     private Double totalPrice;
 
-    @CollectionTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"))
     private List<CartItem> items = new ArrayList<>();
 }
+
