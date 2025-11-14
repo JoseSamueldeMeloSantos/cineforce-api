@@ -30,4 +30,11 @@ public class Cart {
 
     @CollectionTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"))
     private List<CartItem> items = new ArrayList<>();
+
+    public CartItem getItemByName(String name) {
+        return items.stream()
+                .filter(i -> i.getMovie().getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException());
+    }
 }

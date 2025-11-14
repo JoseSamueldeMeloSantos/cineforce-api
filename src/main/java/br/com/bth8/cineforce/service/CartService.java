@@ -38,7 +38,7 @@ public class CartService {
         if (cart.getItems().contains(item)) {
             cart.getItems().add(item);
         } else {
-            new EntityAlreadyExistsException();
+            new EntityAlreadyExistsException("Movie already exists in the cart");
         }
 
         CartDTO dto = mapper.parseObject(repository.save(cart), CartDTO.class);
@@ -47,7 +47,24 @@ public class CartService {
         return dto;
     }
 
+    public CartDTO updateItemQuantity(MovieDTO movie, UUID cartId, Integer quantity) {
+
+        var cart = repository.findById(cartId)
+                .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
+
+        CartItem item = cart.getItemByName(movie.getName());
+
+        item.setQuantity(quantity);
+
+        CartDTO dto = mapper.parseObject(repository.save(cart),CartDTO.class);
+
+        addHateoasLinks(dto, movie);
+
+        return dto;
+    }
+
     private void addHateoasLinks(CartDTO dto, MovieDTO mDto)  {
         dto.add(linkTo(methodOn(CartController.class).addItemToCart(mDto,dto.getId())).withRel("addItemToCart").withType("POST"));
+        dto.add(linkTo(methodOn(CartController.class).updateItemQuantity(mDto,dto.getId(), 1)).withRel("updateItemQuantity").withType("PATCH"));
     }
 }

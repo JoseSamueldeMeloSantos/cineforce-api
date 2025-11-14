@@ -28,6 +28,6 @@ public class CartDTO extends RepresentationModel<CartDTO> {
     @JsonProperty("total_price")
     private Double totalPrice;
 
-    private List<CartItem> items = new ArrayList<>();
+    private List<CartItem> items;
 }
 

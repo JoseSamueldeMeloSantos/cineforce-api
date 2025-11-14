@@ -18,7 +18,7 @@ public class CartController {
     private CartService service;
 
     @PostMapping(
-            value = "/add",
+            value = "/add/{id}",
             consumes = {
                     MediaType.APPLICATION_JSON_VALUE,
                     MediaType.APPLICATION_XML_VALUE,
@@ -30,7 +30,24 @@ public class CartController {
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public ResponseEntity<CartDTO> addItemToCart(@RequestBody MovieDTO movie, UUID cartId) {
+    public ResponseEntity<CartDTO> addItemToCart(@RequestBody MovieDTO movie, @PathVariable("id") UUID cartId) {
         return ResponseEntity.ok(service.addItemToCart(movie, cartId));
+    }
+
+    @PatchMapping(
+            value = "/add/{id}/increase/{quantity}",
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE,
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_YAML_VALUE
+            }
+    )
+    public  ResponseEntity<CartDTO> updateItemQuantity(
+            @RequestBody MovieDTO movie,
+            @PathVariable("id") UUID cartId,
+            @PathVariable("quantity") Integer quanity
+
+    ) {
+        return ResponseEntity.ok(service.updateItemQuantity(movie, cartId,quanity));
     }
 }
