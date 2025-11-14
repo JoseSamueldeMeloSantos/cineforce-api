@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -14,6 +16,8 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class CartItem {
 
+    @NotNull
+    private UUID id;
 
     @Column
     private Integer quantity;

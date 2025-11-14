@@ -35,19 +35,19 @@ public class CartController {
     }
 
     @PatchMapping(
-            value = "/add/{id}/increase/{quantity}",
+            value = "/cart/increase/{itemId}/{quantity}",
             produces = {
                     MediaType.APPLICATION_JSON_VALUE,
                     MediaType.APPLICATION_XML_VALUE,
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public  ResponseEntity<CartDTO> updateItemQuantity(
-            @RequestBody MovieDTO movie,
-            @PathVariable("id") UUID cartId,
-            @PathVariable("quantity") Integer quanity
-
+    public ResponseEntity<CartDTO> updateItemQuantity(
+            @RequestBody CartDTO cartDTO,          // Objeto vindo do corpo da requisição
+            @PathVariable("itemId") UUID itemId,  // ID do item a ser atualizado
+            @PathVariable("quantity") Integer quantity  // Quantidade a aumentar
     ) {
-        return ResponseEntity.ok(service.updateItemQuantity(movie, cartId,quanity));
+        CartDTO updatedCart = service.updateItemQuantity(cartDTO, itemId, quantity);
+        return ResponseEntity.ok(updatedCart);
     }
 }

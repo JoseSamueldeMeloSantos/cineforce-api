@@ -28,12 +28,13 @@ public class Cart {
     @Column(nullable = false)
     private Double totalPrice;
 
+    @ElementCollection
     @CollectionTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"))
     private List<CartItem> items = new ArrayList<>();
 
-    public CartItem getItemByName(String name) {
+    public CartItem getItemById(UUID id) {
         return items.stream()
-                .filter(i -> i.getMovie().getName().equals(name))
+                .filter(i -> i.getMovie().getId() == id)
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException());
     }

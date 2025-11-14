@@ -1,5 +1,6 @@
 package br.com.bth8.cineforce.model.dto;
 
+import br.com.bth8.cineforce.model.entity.Cart;
 import br.com.bth8.cineforce.model.entity.Movie;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -40,4 +41,6 @@ public class UserDTO extends RepresentationModel<UserDTO> {
 
     @JsonProperty("purchased_movies")
     private Set<Movie> purchasedMovies;
+
+    private Cart cart;
 }

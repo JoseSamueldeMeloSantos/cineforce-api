@@ -1,6 +1,5 @@
 package br.com.bth8.cineforce.controller;
 
-import br.com.bth8.cineforce.exception.EnitityNotFoundException;
 import br.com.bth8.cineforce.model.dto.UserDTO;
 import br.com.bth8.cineforce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping(
-            value = "/id/{id}",
+            value = "/{id}",
             produces = {
                     MediaType.APPLICATION_JSON_VALUE,
                     MediaType.APPLICATION_XML_VALUE,

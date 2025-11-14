@@ -30,7 +30,7 @@ public class CartService {
     public CartDTO addItemToCart(MovieDTO movie, UUID cartId) {
         log.info("Adding card item to cart");
 
-        CartItem item = new CartItem(1,mapper.parseObject(movie, Movie.class),movie.getPrice());
+        CartItem item = new CartItem(movie.getId(),1,mapper.parseObject(movie, Movie.class),movie.getPrice());
 
         var cart = repository.findById(cartId)
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
@@ -47,24 +47,24 @@ public class CartService {
         return dto;
     }
 
-    public CartDTO updateItemQuantity(MovieDTO movie, UUID cartId, Integer quantity) {
+    public CartDTO updateItemQuantity(CartDTO cartDTO, UUID itemId, Integer quantity) {
 
-        var cart = repository.findById(cartId)
+        var cart = repository.findById(cartDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
 
-        CartItem item = cart.getItemByName(movie.getName());
+        CartItem item = cart.getItemById(itemId);
 
         item.setQuantity(quantity);
 
         CartDTO dto = mapper.parseObject(repository.save(cart),CartDTO.class);
 
-        addHateoasLinks(dto, movie);
+        addHateoasLinks(dto, null);
 
         return dto;
     }
 
     private void addHateoasLinks(CartDTO dto, MovieDTO mDto)  {
         dto.add(linkTo(methodOn(CartController.class).addItemToCart(mDto,dto.getId())).withRel("addItemToCart").withType("POST"));
-        dto.add(linkTo(methodOn(CartController.class).updateItemQuantity(mDto,dto.getId(), 1)).withRel("updateItemQuantity").withType("PATCH"));
+        dto.add(linkTo(methodOn(CartController.class).updateItemQuantity(dto, UUID.randomUUID(), 1)).withRel("updateItemQuantity").withType("PATCH"));
     }
 }

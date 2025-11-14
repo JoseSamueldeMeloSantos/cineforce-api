@@ -5,6 +5,7 @@ import br.com.bth8.cineforce.controller.UserController;
 import br.com.bth8.cineforce.exception.EnitityNotFoundException;
 import br.com.bth8.cineforce.exception.EntityAlreadyExistsException;
 import br.com.bth8.cineforce.mapper.ObjectMapper;
+import br.com.bth8.cineforce.model.dto.CartDTO;
 import br.com.bth8.cineforce.model.dto.MovieDTO;
 import br.com.bth8.cineforce.model.dto.UserDTO;
 import br.com.bth8.cineforce.model.entity.User;
@@ -66,7 +67,7 @@ public class UserService {
         log.info("deteleting a user by his ID");
 
         var entity = repository.findById(id)
-                .orElseThrow(() -> new EnitityNotFoundException());
+                .orElseThrow(() -> new EnitityNotFoundException("user Not Found Exception"));
 
         repository.delete(entity);
     }
@@ -75,7 +76,7 @@ public class UserService {
     public UserDTO updatePartiality(UUID id, Map<String, Object> fields) {
 
         var user = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException());
+                .orElseThrow(() -> new EntityNotFoundException("user Not Found Exception"));
 
         fields.forEach((key,value) -> {
             Field field = ReflectionUtils.findField(User.class, key);
