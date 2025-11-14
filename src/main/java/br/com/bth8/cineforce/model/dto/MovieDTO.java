@@ -41,6 +41,7 @@ public class MovieDTO extends RepresentationModel<MovieDTO> {
     private String movieLink;
 
     @JsonProperty("addition_date")
+    @JsonFormat(timezone = "dd/mm/yyyy")
     private LocalDate additionDate;
 
     private String genre;

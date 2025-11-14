@@ -126,9 +126,7 @@ public class MovieController {
         return ResponseEntity.ok(service.update(dto));
     }
 
-    @DeleteMapping(
-            value = "/{id}"
-    )
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build(); // 204 No Content

@@ -22,7 +22,7 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID uuid;
+    private UUID id;
 
     @NotNull
     @Column(nullable = false)
