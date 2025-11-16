@@ -26,7 +26,7 @@ public class CartController {
     private CartService service;
 
     @PostMapping(
-            value = "/add/{id}",
+            value = "{cartId}/add/{movieId}",
             consumes = {
                     MediaType.APPLICATION_JSON_VALUE,
                     MediaType.APPLICATION_XML_VALUE,
@@ -38,8 +38,10 @@ public class CartController {
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public ResponseEntity<CartDTO> addItemToCart(@RequestBody MovieDTO movie, @PathVariable("id") UUID cartId) {
-        return ResponseEntity.ok(service.addItemToCart(movie, cartId));
+    public ResponseEntity<CartDTO> addItemToCart(
+            @PathVariable("cartId") UUID cartId,
+            @PathVariable("movieId") UUID movieId) {
+        return ResponseEntity.ok(service.addItemToCart(cartId,movieId));
     }
 
     @PatchMapping(

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"id","quantity","subTotal"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -31,22 +31,19 @@ public class CartItem {
     @Column
     private Double subTotal = 0.0;
 
-    public CartItem(Integer quantity, Movie movie, Double subTotal) {
+    public CartItem(Integer quantity, Movie movie) {
         this.quantity = quantity;
         this.movie = movie;
-        this.subTotal = movie.getPrice() * quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity += quantity;
         updateSubTotal();
     }
 
-    public  Double getSubTotal() {
-        return subTotal;
+    public void  updateSubTotal()  {
+        if (this.movie != null && this.movie.getPrice() != null)
+            this.subTotal = this.movie.getPrice() * this.quantity;
     }
 
-    public void  updateSubTotal()  {
-        this.subTotal = this.movie.getPrice() * quantity;
+    public void  updateQuantity(Integer quantity) {
+        this.quantity += quantity;
+        updateSubTotal();
     }
 }
