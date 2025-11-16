@@ -34,15 +34,19 @@ public class CartItem {
     public CartItem(Integer quantity, Movie movie, Double subTotal) {
         this.quantity = quantity;
         this.movie = movie;
-        this.subTotal = subTotal;
+        this.subTotal = movie.getPrice() * quantity;
     }
 
     public void setQuantity(Integer quantity) {
         this.quantity += quantity;
-        this.subTotal = this.movie.getPrice() * quantity;
+        updateSubTotal();
     }
 
     public  Double getSubTotal() {
-        return subTotal * quantity;
+        return subTotal;
+    }
+
+    public void  updateSubTotal()  {
+        this.subTotal = this.movie.getPrice() * quantity;
     }
 }
