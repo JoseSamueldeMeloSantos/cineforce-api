@@ -1,3 +1,7 @@
+email:
+  subject: "No replay - Cine Force"
+  message: "Default Message"
+
 spring:
   application:
     name: cineforce-api
@@ -15,6 +19,16 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail.smtp.auth: true #ativa autenticação (necessário para Gmail)
+      mail.smtp.starttls.enabled: true #habilita TLS
+      mail.smtp.starttls.required: true #força TLS, falha se não suportado
 
 
   flyway:
