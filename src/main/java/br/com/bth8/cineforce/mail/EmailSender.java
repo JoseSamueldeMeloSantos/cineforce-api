@@ -23,7 +23,6 @@ public class EmailSender {
     private String subject;
     private String body;
     private ArrayList<InternetAddress> recipients = new ArrayList<>();//todos os e-mails
-    private File attachment;
 
     public EmailSender(JavaMailSender mailSender) {
         this.mailSender = mailSender;
@@ -45,27 +44,18 @@ public class EmailSender {
         return this;
     }
 
-    public EmailSender attach(String fileDir) {
-        this.attachment = new File(fileDir);
-        return this;
-    }
-
     public void send(EmailConfig config) {
         log.info("Sending email...");
 
         MimeMessage message = mailSender.createMimeMessage();//representa um e-mail completo
 
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);//O Helper -> facilita o tratamento do MineMessage
+            MimeMessageHelper helper = new MimeMessageHelper(message);//O Helper -> facilita o tratamento do MineMessage
 
             helper.setFrom(config.getUsername());
             helper.setTo(recipients.toArray(new InternetAddress[0]));
             helper.setSubject(subject);
             helper.setText(body, true);//para dizer que tex é do tipo html
-
-            if (attachment != null) {
-                helper.addAttachment(attachment.getName(), attachment);
-            }
 
             mailSender.send(message);
 
@@ -83,7 +73,6 @@ public class EmailSender {
         this.subject = null;
         this.body = null;
         this.recipients = null;
-        this.attachment = null;
     }
 
 
