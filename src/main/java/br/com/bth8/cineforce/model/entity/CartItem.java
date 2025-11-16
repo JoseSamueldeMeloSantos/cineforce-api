@@ -13,19 +13,36 @@ import java.util.UUID;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Embeddable
+@Entity
+@Table(name = "cart_items")
 public class CartItem {
 
-    @NotNull
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column
-    private Integer quantity;
+    private Integer quantity = 0;
 
     @ManyToOne (optional = false)
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
     @Column
-    private Double subTotal;
+    private Double subTotal = 0.0;
+
+    public CartItem(Integer quantity, Movie movie, Double subTotal) {
+        this.quantity = quantity;
+        this.movie = movie;
+        this.subTotal = subTotal;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity += quantity;
+        this.subTotal = this.movie.getPrice() * quantity;
+    }
+
+    public  Double getSubTotal() {
+        return subTotal * quantity;
+    }
 }

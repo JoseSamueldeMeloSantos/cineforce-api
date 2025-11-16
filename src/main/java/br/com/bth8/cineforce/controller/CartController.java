@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/cart")
+@RequestMapping("/api/cart")
 public class CartController {
 
     @Autowired
@@ -43,7 +43,7 @@ public class CartController {
     }
 
     @PatchMapping(
-            value = "/increase/{itemId}/{quantity}",
+            value = "{cartId}/increase/{itemId}/{quantity}",
             produces = {
                     MediaType.APPLICATION_JSON_VALUE,
                     MediaType.APPLICATION_XML_VALUE,
@@ -51,11 +51,11 @@ public class CartController {
             }
     )
     public ResponseEntity<CartDTO> updateItemQuantity(
-            @RequestBody CartDTO cartDTO,          // Objeto vindo do corpo da requisição
-            @PathVariable("itemId") UUID itemId,  // ID do item a ser atualizado
-            @PathVariable("quantity") Integer quantity  // Quantidade a aumentar
+            @PathVariable("cartId") UUID cartId,
+            @PathVariable("itemId") UUID itemId,
+            @PathVariable("quantity") Integer quantity
     ) {
-        CartDTO updatedCart = service.updateItemQuantity(cartDTO, itemId, quantity);
+        CartDTO updatedCart = service.updateItemQuantity(cartId, itemId, quantity);
         return ResponseEntity.ok(updatedCart);
     }
 

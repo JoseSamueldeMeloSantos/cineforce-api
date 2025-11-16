@@ -14,7 +14,7 @@ public class CartItemDTO extends RepresentationModel<CartItemDTO> {
 
     private Integer quantity;
 
-    private Movie movie;
+    private MovieDTO movie;
 
     @JsonProperty("sub_total")
     private Double subTotal;

@@ -3,6 +3,7 @@ package br.com.bth8.cineforce.model.dto;
 import br.com.bth8.cineforce.model.entity.Cart;
 import br.com.bth8.cineforce.model.entity.Movie;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -16,6 +17,8 @@ import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -40,7 +43,7 @@ public class UserDTO extends RepresentationModel<UserDTO> {
     private LocalDate birthDate;
 
     @JsonProperty("purchased_movies")
-    private Set<Movie> purchasedMovies;
+    private List<MovieDTO> purchasedMovies;
 
-    private Cart cart;
+    private CartDTO cart;
 }

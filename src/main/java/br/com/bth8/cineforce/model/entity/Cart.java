@@ -9,33 +9,43 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
-
 @Data
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"items"})
 @Entity
 @Table(name = "carts")
 public class Cart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @NotNull
-    @Column(nullable = false)
-    private Double totalPrice;
+    @OneToOne
+    @MapsId // FAZ O CART RECEBER O MESMO ID DO USER
+    @JoinColumn(name = "id")
+    private User user;
 
-    @ElementCollection
-    @CollectionTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"))
+    @Column(nullable = false)
+    private Double totalPrice = 0.0;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cart_id")
     private List<CartItem> items = new ArrayList<>();
+
+    public Cart(User user, Double totalPrice) {
+        this.user = user;
+        this.totalPrice = totalPrice;
+        this.items = new ArrayList<>();
+    }
 
     public CartItem getItemById(UUID id) {
         return items.stream()
-                .filter(i -> i.getMovie().getId() == id)
+                .filter(i -> i.getMovie().getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException());
     }
+
 }

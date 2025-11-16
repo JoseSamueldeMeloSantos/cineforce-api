@@ -10,13 +10,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Data
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"cart", "purchasedMovies"})
 @Entity
 @Table(name = "users")
 public class User {
@@ -27,7 +26,7 @@ public class User {
 
     @NotBlank
     @NotNull
-    @Column(name = "nick_name",nullable = false, unique = true)
+    @Column(name = "nick_name",nullable = false)
     private String nickName;
 
     @Email
@@ -39,7 +38,7 @@ public class User {
     @Column(length = 60)
     private String bio;
 
-    @Column
+    @Column(name = "birth_date")
     private LocalDate birthDate;
 
     @ManyToMany
@@ -48,9 +47,16 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "movie_id")
     )
-    private Set<Movie> purchasedMovies;
+    private List<Movie> purchasedMovies;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "cart_id")
-    private Cart cart = new Cart();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Cart cart;
+
+    public User(String nickName, String email, String bio, LocalDate birthDate) {
+        this.nickName = nickName;
+        this.email = email;
+        this.bio = bio;
+        this.birthDate = birthDate;
+        this.purchasedMovies = new ArrayList<>();
+    }
 }

@@ -19,7 +19,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("api/movie")
+@RequestMapping("/api/movie")
 public class MovieController {
 
     @Autowired

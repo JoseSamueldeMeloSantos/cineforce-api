@@ -8,6 +8,7 @@ import br.com.bth8.cineforce.mapper.ObjectMapper;
 import br.com.bth8.cineforce.model.dto.CartDTO;
 import br.com.bth8.cineforce.model.dto.MovieDTO;
 import br.com.bth8.cineforce.model.dto.UserDTO;
+import br.com.bth8.cineforce.model.entity.Cart;
 import br.com.bth8.cineforce.model.entity.User;
 import br.com.bth8.cineforce.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -32,17 +33,16 @@ public class UserService {
     @Autowired
     private ObjectMapper mapper;
 
-    public UserDTO create(UserDTO user) {
+    public UserDTO create(UserDTO userDTO) {
         log.info("creating user");
 
-        if (repository.findById(user.getId()).isPresent()) {
-            new EntityAlreadyExistsException();
-        }
+        User user = new User(userDTO.getNickName(), userDTO.getEmail(), userDTO.getBio(), userDTO.getBirthDate());
 
-        var entity = mapper.parseObject(user, User.class);
-        UserDTO dto = mapper.parseObject(repository.save(entity),UserDTO.class);
+        User savedUser = repository.save(user);
+        savedUser.setCart(new Cart(savedUser, 0.0));
+        repository.save(savedUser);
 
-        addHateoasLinks(dto);
+        UserDTO dto = mapper.parseObject(savedUser, UserDTO.class);
 
         return dto;
     }
