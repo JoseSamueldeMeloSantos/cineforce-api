@@ -4,7 +4,7 @@ email:
 
 mercado-pago:
   token: ${MP_TOKEN}
-  notification-url: htttp://localhost:8090/api/notification
+  notification-url: http://localhost:8090/api/notification
 
 spring:
   application:

@@ -8,6 +8,10 @@ import com.mercadopago.client.preference.*;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.preference.Preference;
+import jakarta.annotation.PostConstruct;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,8 +19,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+
 @Slf4j
+@RequiredArgsConstructor
+@Component
 public class MercadoPagoClient {
 
     @Value("${mercado-pago.token}")
@@ -24,6 +30,7 @@ public class MercadoPagoClient {
     @Value("${mercado-pago.notification-url}")
     private String notificationUrl;
 
+    @PostConstruct
     public void init() {
         MercadoPagoConfig.setAccessToken(token);
         log.info("Starting mercado pago...");
