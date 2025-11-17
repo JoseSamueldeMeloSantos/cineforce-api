@@ -2,6 +2,10 @@ email:
   subject: "No replay - Cine Force"
   message: "Default Message"
 
+mercado-pago:
+  token: ${MP_TOKEN}
+  notification-url: htttp://localhost:8090/api/notification
+
 spring:
   application:
     name: cineforce-api
