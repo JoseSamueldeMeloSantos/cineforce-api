@@ -13,6 +13,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 import java.util.UUID;
@@ -47,21 +48,21 @@ public class MovieController {
     }
 
     @PostMapping(
-            consumes = {
-                    MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_XML_VALUE,
-                    MediaType.APPLICATION_YAML_VALUE
-            },
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE, // aceita multipart/form-data
             produces = {
                     MediaType.APPLICATION_JSON_VALUE,
                     MediaType.APPLICATION_XML_VALUE,
                     MediaType.APPLICATION_YAML_VALUE
             }
     )
-    public ResponseEntity<MovieDTO> create(@RequestBody MovieDTO dto) {
-        MovieDTO created = service.create(dto);
-        return ResponseEntity.status(201).body(created); // 201 Created
+    public ResponseEntity<MovieDTO> create(
+            @RequestPart("movie") MovieDTO dto,   // parte JSON do DTO
+            @RequestPart("file") MultipartFile file // parte arquivo
+    ) {
+        MovieDTO created = service.create(dto, file);
+        return ResponseEntity.status(201).body(created);
     }
+
 
     @GetMapping(
             value = "/id/{id}",

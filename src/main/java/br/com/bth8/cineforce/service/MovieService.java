@@ -20,7 +20,10 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.UUID;
@@ -39,18 +42,32 @@ public class MovieService {
     private ObjectMapper mapper;
     @Autowired
     private PagedResourcesAssembler<MovieDTO> assembler;
+    @Autowired
+    private GoogleDriveService driveService;
 
-    public MovieDTO create(MovieDTO movie) {
+    public MovieDTO create(
+            MovieDTO movie,
+            MultipartFile file) {
         log.info("creating movie");
 
         if (repository.findByName(movie.getName()).isPresent()) {
-            new EntityAlreadyExistsException();
+           throw new EntityAlreadyExistsException();
         }
 
         var enity = mapper.parseObject(movie, Movie.class);
+
+        String movieDriverID = "";
+        try {
+            movieDriverID = driveService.uploadFile(file, movie.getName());
+            enity.setMovieDriveId(movieDriverID);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
         MovieDTO dto = mapper.parseObject(repository.save(enity),MovieDTO.class);
 
-        addHateoasLinks(dto);
+        addHateoasLinks(dto, file);
 
         return dto;
     }
@@ -63,7 +80,7 @@ public class MovieService {
         Page<MovieDTO> moviesDtoWithHateoas = entities.map(movie -> {
             MovieDTO dto = mapper.parseObject(movie, MovieDTO.class);
             try {
-                addHateoasLinks(dto);
+                addHateoasLinks(dto,null);
             } catch (EnitityNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -89,7 +106,7 @@ public class MovieService {
 
         MovieDTO dto = mapper.parseObject(entity, MovieDTO.class);
 
-        addHateoasLinks(dto);
+        addHateoasLinks(dto,null);
 
         return dto;
     }
@@ -102,7 +119,7 @@ public class MovieService {
 
         MovieDTO dto = mapper.parseObject(entity, MovieDTO.class);
 
-        addHateoasLinks(dto);
+        addHateoasLinks(dto,null);
 
         return dto;
     }
@@ -136,7 +153,7 @@ public class MovieService {
 
         MovieDTO dto = mapper.parseObject(repository.save(movie), MovieDTO.class);
 
-        addHateoasLinks(dto);
+        addHateoasLinks(dto,null);
 
         return dto;
     }
@@ -160,18 +177,18 @@ public class MovieService {
         entity.setAdditionDate(dto.getAdditionDate());
 
         MovieDTO mdto = mapper.parseObject(repository.save(entity),MovieDTO.class);
-        addHateoasLinks(mdto);
+        addHateoasLinks(mdto,null);
 
         return mdto;
     }
 
-    private void  addHateoasLinks(MovieDTO dto) {
+    private void  addHateoasLinks(MovieDTO dto, MultipartFile file) {
 
         dto.add(linkTo(methodOn(MovieController.class).findById(dto.getId())).withSelfRel().withType("GET"));
 
         dto.add(linkTo(methodOn(MovieController.class).findByName(dto.getName())).withRel("findByName").withType("GET"));
 
-        dto.add(linkTo(methodOn(MovieController.class).create(dto)).withRel("create").withType("POST"));
+        dto.add(linkTo(methodOn(MovieController.class).create(dto,file)).withRel("create").withType("POST"));
 
         dto.add(linkTo(methodOn(MovieController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
 
