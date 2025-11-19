@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+###drive###
+/src/main/resources/credentials/cineforce-key.json

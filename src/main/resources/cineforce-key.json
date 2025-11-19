@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "cineforce",
+  "private_key_id": "9d3803f96c39998cddac90b34d314774276462c0",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCyy/vseFwusqND\nJKp2D7jGzwTt5x6YsW8y4irtjtBtifwMeFrGHsYJx0q6Bs/5MNzPxa5LbgpQL1ZH\n8pkW1NPgHsCfgjJ68mYLVjgplrPUSznegmZ3K4d7mn2bZb+Mgx45ETd0/Dwb/9I9\nmNUZMgaiu254Mm0CXAH17g4aet51RCq1dbD5ywTh+kv6E0ItuVgRDsSjooQmpayR\ngrG6qgNxZp/MFmvlIh+iYoFfvCXKblYU8Bh+2nJvdzrRqHoaVRbDIhXOa4o/ivSs\nBtb8VsJTGMZRjuLt0Pp6IZaU5VHyN2iwyF7crcF0gXugJ1eIE5PlW3TsopmrDNTN\no92LWmiZAgMBAAECggEAAJBlrU+M5OXR34iaVBCFIfVtu81mmo82vVea0JCKhknw\n5l4r1SOsNsQu72rNlajqjWo/fEPu2uVnVYdFpd2KhJK8Q1SPEbW5jjAZscHks9b/\n6fyJ07bqsMBiRI773Xbdbcso3GDeVK1ILcMRawiuHi3OsajhEKiXJf44A6vfD0ok\nKcVqf/O0e24JBIDVScIvc2hT6IuRU/Y6O9VrGIzBw/M3GXHmr3U0uwa/tQ3oZORF\nW4Mz3s4QnmB1HVlZ3sHyAbJX1QpOItwkOdu/hCEJ067IHdOhVXzDXzwk3alTJoBZ\nn8DB7i/snNaUV01L71NvDkcIzPVY9d7uxxDEKf/vQQKBgQDXnU5615V3nk2Rva9K\niiErzHVHp+B/f738oe/RWz19cDs7kUMb95dNknKdemzkHuTr9jbr1GgucB3JA0Yz\nQwu6JZ4wMIf3pySxgFY4A9b1A8BcwCvxAupwzvjgKYdDcoUQDfCza6iZvz4fRZgv\nMMdlwjeCVtjmbZdu/iU7YhLVIQKBgQDUSUYkCJJ/yWFDArBgJ38mRX4qfX10XSmw\neq8iCYzyF3sx4krynh8sKfcHvOzh9QGFoPh34LK/RYYH3oXp1zSaqNhefJjAg6AK\n1QwYKGmRmh9kylkmZVz2A6vWi1MlT7ck0C8Lx9/ycxcur9NGhoMeFqWNrg8j9NiU\njh/vh5IseQKBgQCiYtkOb3skgdcN4nw4eVuOLwhNFURhAgZGVHfXhw4CgRo7PKX8\nVDZht+AWdnO4QwRKKj8m0ew8vTfRgmPGi8IzSc2foY1lmT5raKqGuW2VTmP79seh\nVn7WwypxORWkWIWal8Ume/iZAo144+M/907VdrZztZDZysP4VfQYiz5/wQKBgHg7\nX+x8pmyVo+6OEVMES7FjXoe2N122fiwj8Bj5C8j5n56rKgOrpsAerHjHeeqoF0qV\n1uQecV5/g9/lGjdM2dBWnOU28FTot7Yq4AS2rsP2ZJ1zNXbXpgT4I1UJ5/eT5IiH\nGH41oBLzOEgK8UBaYtyhuvY5hP26aQgKTvAc+p8RAoGBAI1Dtd2sbf79KFs6o0oA\nvLnwNyv3IxvkH8UhViZ4UI1/PHIR4tN+lRMkw9LaeqhiuKCMK17JOB6ouYFk8S+4\nqaVBIK8Vg2lHWaui8h5DSdOyZHLQhu0LxBoPmd6d1pGpvF8zk6Loyie6N1X+Haul\nQY9QGOaFILNVOtCbWY5tyx2J\n-----END PRIVATE KEY-----\n",
+  "client_email": "cineforce-384@cineforce.iam.gserviceaccount.com",
+  "client_id": "115028322620775925781",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cineforce-384%40cineforce.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

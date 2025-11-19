@@ -30,8 +30,6 @@ public class MercadoPagoClient {
 
     @Value("${mercado-pago.token}")
     private String token;
-    @Value("${mercado-pago.notification-url}")
-    private String notificationUrl;
 
     @PostConstruct
     public void init() {
@@ -76,7 +74,6 @@ public class MercadoPagoClient {
                     .payer(payer)
                     .backUrls(backUrls)
                     .autoReturn("approved")//automaticamente retorna após um pagamento aprovado
-                    .notificationUrl(notificationUrl)
                     .externalReference(orderNumber)//id do pedido
                     .metadata(metadata)
                     .build();
@@ -88,7 +85,7 @@ public class MercadoPagoClient {
                     preference.getInitPoint()
             );
 
-        }catch (MPApiException e) {
+        } catch (MPApiException e) {
             log.error("Mercado Pago API error creating preference for orderNumber {}: Status Code: {}, Response: {}",
                     orderNumber, e.getStatusCode(), e.getApiResponse().getContent(), e);
             throw new PaymentGatewayException("Mercado Pago API error: " + e.getApiResponse().getContent(), e);

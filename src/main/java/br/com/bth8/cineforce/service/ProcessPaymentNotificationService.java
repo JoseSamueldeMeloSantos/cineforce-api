@@ -26,6 +26,8 @@ public class ProcessPaymentNotificationService {
     private CartRepository repository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EmailService mail;
 
 
     public ProccessPaymentNotificationResponseDTO processPaymentNotification(
@@ -59,6 +61,8 @@ public class ProcessPaymentNotificationService {
 
                 userRepository.save(user);
                 repository.save(cart);
+
+                mail.sendSimpleEmail(user.getEmail(), "No-replay | CineFoce", "Você comprou no CineForce");
 
                 return new ProccessPaymentNotificationResponseDTO(true, "SUCCESS");
             } else {
