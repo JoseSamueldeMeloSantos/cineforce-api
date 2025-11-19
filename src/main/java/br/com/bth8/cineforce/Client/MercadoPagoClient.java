@@ -16,7 +16,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -64,6 +67,10 @@ public class MercadoPagoClient {
                     .pending(request.backUrls().pending())
                     .build();
 
+            //passando o user id para o metada para atualizar o banco
+            Map<String, Object> metadata = new HashMap<>();
+            metadata.put("userId", request.userId());
+
             PreferenceRequest preferenceRequest = PreferenceRequest.builder()
                     .items(items)
                     .payer(payer)
@@ -71,6 +78,7 @@ public class MercadoPagoClient {
                     .autoReturn("approved")//automaticamente retorna após um pagamento aprovado
                     .notificationUrl(notificationUrl)
                     .externalReference(orderNumber)//id do pedido
+                    .metadata(metadata)
                     .build();
 
             Preference preference = client.create(preferenceRequest);

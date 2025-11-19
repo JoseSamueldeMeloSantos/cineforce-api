@@ -21,7 +21,6 @@ public class CreatePaymentPreferenceService {
 
         String orderNumber = "";
         try {
-
             CreatePreferenceResponseDTO response = mercadoPagoClient.createPreference(request, orderNumber);
             return response;
         } catch (PaymentGatewayException e) {
