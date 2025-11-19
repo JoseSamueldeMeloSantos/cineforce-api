@@ -1,4 +1,4 @@
-package br.com.bth8.cineforce.serialization.converter;
+package br.com.bth8.cineforce.infra.serialization.converter;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;

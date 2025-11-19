@@ -1,13 +1,11 @@
 package br.com.bth8.cineforce.service;
 
-import br.com.bth8.cineforce.Client.MercadoPagoClient;
+import br.com.bth8.cineforce.infra.Client.MercadoPagoClient;
 import br.com.bth8.cineforce.exception.PaymentGatewayException;
 import br.com.bth8.cineforce.model.dto.request.CreateReferenceRequestDTO;
 import br.com.bth8.cineforce.model.dto.response.CreatePreferenceResponseDTO;
-import com.mercadopago.exceptions.MPException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

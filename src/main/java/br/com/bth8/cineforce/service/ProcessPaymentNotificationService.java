@@ -1,6 +1,6 @@
 package br.com.bth8.cineforce.service;
 
-import br.com.bth8.cineforce.Client.MercadoPagoClient;
+import br.com.bth8.cineforce.infra.Client.MercadoPagoClient;
 import br.com.bth8.cineforce.exception.EnitityNotFoundException;
 import br.com.bth8.cineforce.exception.PaymentGatewayException;
 import br.com.bth8.cineforce.model.dto.request.ProcessPaymentNotificationRequestDTO;
@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 @Service

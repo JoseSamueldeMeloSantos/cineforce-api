@@ -2,18 +2,16 @@ package br.com.bth8.cineforce.service;
 
 import br.com.bth8.cineforce.controller.CartController;
 import br.com.bth8.cineforce.exception.EntityAlreadyExistsException;
-import br.com.bth8.cineforce.mapper.ObjectMapper;
+import br.com.bth8.cineforce.model.mapper.ObjectMapper;
 import br.com.bth8.cineforce.model.dto.CartDTO;
 import br.com.bth8.cineforce.model.dto.CartItemDTO;
 import br.com.bth8.cineforce.model.dto.MovieDTO;
 import br.com.bth8.cineforce.model.entity.CartItem;
-import br.com.bth8.cineforce.model.entity.Movie;
 import br.com.bth8.cineforce.repository.CartRepository;
 import br.com.bth8.cineforce.repository.MovieRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

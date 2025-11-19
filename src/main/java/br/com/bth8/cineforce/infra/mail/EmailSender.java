@@ -1,4 +1,4 @@
-package br.com.bth8.cineforce.mail;
+package br.com.bth8.cineforce.infra.mail;
 
 import br.com.bth8.cineforce.config.EmailConfig;
 import jakarta.mail.MessagingException;
@@ -10,7 +10,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 

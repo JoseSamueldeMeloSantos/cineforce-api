@@ -3,7 +3,7 @@ package br.com.bth8.cineforce.service;
 import br.com.bth8.cineforce.controller.MovieController;
 import br.com.bth8.cineforce.exception.EnitityNotFoundException;
 import br.com.bth8.cineforce.exception.EntityAlreadyExistsException;
-import br.com.bth8.cineforce.mapper.ObjectMapper;
+import br.com.bth8.cineforce.model.mapper.ObjectMapper;
 import br.com.bth8.cineforce.model.dto.MovieDTO;
 import br.com.bth8.cineforce.model.entity.Movie;
 import br.com.bth8.cineforce.repository.MovieRepository;
@@ -18,12 +18,10 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 

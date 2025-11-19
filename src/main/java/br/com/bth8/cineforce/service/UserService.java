@@ -1,12 +1,8 @@
 package br.com.bth8.cineforce.service;
 
-import br.com.bth8.cineforce.controller.MovieController;
 import br.com.bth8.cineforce.controller.UserController;
 import br.com.bth8.cineforce.exception.EnitityNotFoundException;
-import br.com.bth8.cineforce.exception.EntityAlreadyExistsException;
-import br.com.bth8.cineforce.mapper.ObjectMapper;
-import br.com.bth8.cineforce.model.dto.CartDTO;
-import br.com.bth8.cineforce.model.dto.MovieDTO;
+import br.com.bth8.cineforce.model.mapper.ObjectMapper;
 import br.com.bth8.cineforce.model.dto.UserDTO;
 import br.com.bth8.cineforce.model.entity.Cart;
 import br.com.bth8.cineforce.model.entity.User;

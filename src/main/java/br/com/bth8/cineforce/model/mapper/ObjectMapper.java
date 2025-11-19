@@ -1,4 +1,4 @@
-package br.com.bth8.cineforce.mapper;
+package br.com.bth8.cineforce.model.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

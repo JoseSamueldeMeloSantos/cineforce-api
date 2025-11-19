@@ -1,4 +1,4 @@
-package br.com.bth8.cineforce.Client;
+package br.com.bth8.cineforce.infra.Client;
 
 import br.com.bth8.cineforce.exception.PaymentGatewayException;
 import br.com.bth8.cineforce.model.dto.request.CreateReferenceRequestDTO;

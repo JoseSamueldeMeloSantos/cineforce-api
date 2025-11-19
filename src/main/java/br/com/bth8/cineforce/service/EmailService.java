@@ -1,7 +1,7 @@
 package br.com.bth8.cineforce.service;
 
 import br.com.bth8.cineforce.config.EmailConfig;
-import br.com.bth8.cineforce.mail.EmailSender;
+import br.com.bth8.cineforce.infra.mail.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
