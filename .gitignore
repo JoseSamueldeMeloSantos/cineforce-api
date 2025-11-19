@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ###drive###
-/src/main/resources/credentials/cineforce-key.json
+src/main/resources/cineforce-key.json
