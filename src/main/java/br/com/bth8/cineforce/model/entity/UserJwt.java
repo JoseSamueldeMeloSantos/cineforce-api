@@ -21,7 +21,7 @@ public class UserJwt implements UserDetails {
     @Id
     private UUID id;
 
-    @Column(name = "user_name",unique = true)
+    @Column(name = "email",unique = true)
     private String email;
 
     @Column(name = "full_name")
