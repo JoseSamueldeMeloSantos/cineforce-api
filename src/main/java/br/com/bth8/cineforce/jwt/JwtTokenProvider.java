@@ -52,6 +52,22 @@ public class JwtTokenProvider {//O provider lida diretamente com o token em si â
         return new TokenDTO(username,true, now, validity, accessToken, refreshToken);
     }
 
+    public TokenDTO refreshToken(String refreshToken) {
+        var token = "";
+
+        if (StringUtils.isNotBlank(refreshToken) && refreshToken.startsWith("Bearer ")) {
+            token = refreshToken.substring("Bearer ".length());
+        }
+
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT  decodedJWT = verifier.verify(token);
+
+        String username = decodedJWT.getSubject();
+        List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
+
+        return createAcessToken(username, roles);
+    }
+
     private String getRefreshToken(String username, List<String> roles, Instant now) {
 
         Instant refreshTokenValidity = Instant.now().plusMillis(validityInMilliseconds * 3);
