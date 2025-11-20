@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.UUID;
 
@@ -42,8 +43,7 @@ public class MovieService {
     private ObjectMapper mapper;
     @Autowired
     private PagedResourcesAssembler<MovieDTO> assembler;
-    @Autowired
-    private GoogleDriveService driveService;
+
 
     public MovieDTO create(
             MovieDTO movie,
@@ -64,7 +64,7 @@ public class MovieService {
             throw new RuntimeException(e);
         }
 
-
+        enity.setAdditionDate(LocalDate.now());
         MovieDTO dto = mapper.parseObject(repository.save(enity),MovieDTO.class);
 
         addHateoasLinks(dto, file);

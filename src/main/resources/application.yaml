@@ -5,6 +5,11 @@ email:
 mercado-pago:
   token: ${MP_TOKEN}
 
+gcs:
+  subdirectory: review
+  bucket-name: cineforce-bucket
+
+
 spring:
   application:
     name: cineforce-api
@@ -33,6 +38,11 @@ spring:
       mail.smtp.starttls.enabled: true #habilita TLS
       mail.smtp.starttls.required: true #força TLS, falha se não suportado
 
+  cloud:
+    gcp:
+      project-id: cineforce
+      credentials:
+        location: classpath:credentials.json
 
   flyway:
     enabled: false   # <- AQUI FUNCIONA
