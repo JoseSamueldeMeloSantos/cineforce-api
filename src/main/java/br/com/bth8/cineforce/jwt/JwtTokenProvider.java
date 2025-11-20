@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -44,11 +45,28 @@ public class JwtTokenProvider {//O provider lida diretamente com o token em si ‚
     }
 
     private String getRefreshToken(String username, List<String> roles, Instant now) {
-        return null;
+
+        Instant refreshTokenValidity = Instant.now().plusMillis(validityInMilliseconds * 3);
+
+        return JWT.create()
+                .withClaim("roles", roles)
+                .withIssuedAt(now)//at√© quando vai durar
+                .withExpiresAt(refreshTokenValidity)
+                .withSubject(username)
+                .sign(algorithm);
     }
 
     private String getAcessToken(String username, List<String> roles, Instant now, Instant validity) {
-        return null;
+
+        String issueUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+
+        return JWT.create()
+                .withClaim("roles",roles)
+                .withIssuedAt(now)
+                .withExpiresAt(validity)
+                .withSubject(username)
+                .withIssuer(issueUrl)//para identificar quem gerou o token
+                .sign(algorithm);//Cria a assinatura HMAC256 com a secretKey
     }
 
 
