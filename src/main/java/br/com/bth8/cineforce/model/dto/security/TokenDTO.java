@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,8 +16,8 @@ public class TokenDTO {
 
     private String username;
     private Boolean authenticated;
-    private LocalDateTime created;
-    private LocalDateTime expiration;
+    private Instant created;
+    private Instant expiration;
     private String acessToken;
     private String refreshToken;//quando o token expirar
 }

@@ -1,6 +1,7 @@
 package br.com.bth8.cineforce.jwt;
 
 import br.com.bth8.cineforce.model.dto.security.TokenDTO;
+import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
@@ -32,18 +34,22 @@ public class JwtTokenProvider {//O provider lida diretamente com o token em si â
 
     public TokenDTO createAcessToken(String username, List<String> roles) {
 
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime validity = now.plusNanos(validityInMilliseconds * 1_000_000);
+        Instant now = Instant.now();
+        Instant validity = now.plusMillis(validityInMilliseconds);
 
-        String accessTOken = getAccesToken(username, roles, now, validity);
+        String accessToken = getAcessToken(username, roles, now, validity);
         String refreshToken = getRefreshToken(username, roles, now);
 
-        return new TokenDTO(username, true, now, validity, accessTOken, refreshToken);
+        return new TokenDTO(username,true, now, validity, accessToken, refreshToken);
     }
 
-    private String getRefreshToken(String username, List<String> roles, LocalDateTime now) {
+    private String getRefreshToken(String username, List<String> roles, Instant now) {
+        return null;
     }
 
-    private String getAccesToken(String username, List<String> roles, LocalDateTime now, LocalDateTime validity) {
+    private String getAcessToken(String username, List<String> roles, Instant now, Instant validity) {
+        return null;
     }
+
+
 }
