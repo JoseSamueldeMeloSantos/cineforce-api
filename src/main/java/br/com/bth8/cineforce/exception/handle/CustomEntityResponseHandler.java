@@ -1,9 +1,6 @@
 package br.com.bth8.cineforce.exception.handle;
 
-import br.com.bth8.cineforce.exception.EnitityNotFoundException;
-import br.com.bth8.cineforce.exception.EntityAlreadyExistsException;
-import br.com.bth8.cineforce.exception.ExceptionResponse;
-import br.com.bth8.cineforce.exception.PaymentGatewayException;
+import br.com.bth8.cineforce.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -71,5 +68,14 @@ public class CustomEntityResponseHandler {
         );
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    public final ResponseEntity<ExceptionResponse> handleInvalidJwtAuthenticationException(Exception ex, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+                LocalDate.now(),
+                ex.getMessage(),
+                request.getDescription(false));
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 }
