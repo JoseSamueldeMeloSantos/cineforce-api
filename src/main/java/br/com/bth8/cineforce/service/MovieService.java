@@ -43,6 +43,8 @@ public class MovieService {
     private ObjectMapper mapper;
     @Autowired
     private PagedResourcesAssembler<MovieDTO> assembler;
+    @Autowired
+    private GcsService gcsService;
 
 
     public MovieDTO create(
@@ -56,13 +58,15 @@ public class MovieService {
 
         var enity = mapper.parseObject(movie, Movie.class);
 
-        String movieDriverID = "";
+        String link = "";
         try {
-            movieDriverID = driveService.uploadFile(file, movie.getName());
-            enity.setMovieDriveId(movieDriverID);
+            link = gcsService.uploadFile(file);
         } catch (IOException e) {
+            log.error("Upload fail");
             throw new RuntimeException(e);
         }
+
+        enity.setMovieLink(link);
 
         enity.setAdditionDate(LocalDate.now());
         MovieDTO dto = mapper.parseObject(repository.save(enity),MovieDTO.class);

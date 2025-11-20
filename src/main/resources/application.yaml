@@ -44,5 +44,11 @@ spring:
       credentials:
         location: classpath:credentials.json
 
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+
+
   flyway:
     enabled: false   # <- AQUI FUNCIONA

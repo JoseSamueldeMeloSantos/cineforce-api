@@ -42,9 +42,6 @@ public class Movie {
     @Column(name = "trailer_link")
     private String trailerLink;
 
-    @Column(name = "movie_drive_id")
-    private String movieDriveId;
-
     @Column(name = "addition_date")
     private LocalDate additionDate;
 
