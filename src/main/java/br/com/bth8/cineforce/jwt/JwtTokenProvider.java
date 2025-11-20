@@ -2,10 +2,15 @@ package br.com.bth8.cineforce.jwt;
 
 import br.com.bth8.cineforce.model.dto.security.TokenDTO;
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -30,7 +35,7 @@ public class JwtTokenProvider {//O provider lida diretamente com o token em si �
     @PostConstruct
     protected void  init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());//codifica a secretKey em Base64
-        algorithm = algorithm.HMAC256(secretKey.getBytes());//cria o algoritmo HMAC256 para assinar tokens
+        algorithm = Algorithm.HMAC256(secretKey.getBytes());//cria o algoritmo HMAC256 para assinar tokens
     }
 
     public TokenDTO createAcessToken(String username, List<String> roles) {
@@ -67,6 +72,24 @@ public class JwtTokenProvider {//O provider lida diretamente com o token em si �
                 .withSubject(username)
                 .withIssuer(issueUrl)//para identificar quem gerou o token
                 .sign(algorithm);//Cria a assinatura HMAC256 com a secretKey
+    }
+
+    public Authentication getAuthentication(String token) {
+        DecodedJWT decodedJWT = decodedToken(token);
+        UserDetails userDetails = this.userDetailsService
+                .loadUserByUsername(decodedJWT.getSubject());//busca no banco  um usuario e retorna se um obj userDetails
+
+        //cria um obj de autenticação do spring security
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());//user,senha,permissões
+    }
+
+    //verifica,valida e docodifica
+    private DecodedJWT decodedToken(String token) {
+        //Algorithm alg = Algorithm.HMAC256(secretKey.getBytes());//cria o algoritimo de verificação
+        JWTVerifier verifier = JWT.require(algorithm).build();//Cria um verificador de tokens JWT com base no alg
+        DecodedJWT decodedJWT = verifier.verify(token);//verifica e valida o token
+
+        return decodedJWT;
     }
 
 
