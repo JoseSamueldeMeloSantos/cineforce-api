@@ -9,6 +9,12 @@ gcs:
   subdirectory: review
   bucket-name: cineforce-bucket
 
+security:
+  jwt:
+    token:
+      secret-key: ${SCRECT_KEY}
+      expire-lenght: 3600000
+
 
 spring:
   application:

@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class TokenDTO {
 
     private String username;
-    private String password;
     private Boolean authenticated;
     private LocalDateTime created;
     private LocalDateTime expiration;
