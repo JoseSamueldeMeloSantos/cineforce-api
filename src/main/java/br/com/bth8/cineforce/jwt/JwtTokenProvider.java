@@ -1,12 +1,15 @@
 package br.com.bth8.cineforce.jwt;
 
+import br.com.bth8.cineforce.exception.InvalidJwtAuthenticationException;
 import br.com.bth8.cineforce.model.dto.security.TokenDTO;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -92,5 +95,29 @@ public class JwtTokenProvider {//O provider lida diretamente com o token em si â
         return decodedJWT;
     }
 
+    public String resolveToken(HttpServletRequest request) {
+
+        String bearerToken = request.getHeader("Authorization");
+
+        if (StringUtils.isNotBlank(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring("Bearer ".length());
+        }
+
+        return null;
+    }
+
+    public boolean validatedToken(String token) {
+        DecodedJWT decodedJWT = decodedToken(token);
+
+        try {
+            if (decodedJWT.getExpiresAt().toInstant().isBefore(Instant.now())) {
+                return false;
+            }
+
+            return true;
+        } catch (Exception e) {
+            throw new InvalidJwtAuthenticationException("Expire or Invalid JWT Token");
+        }
+    }
 
 }
