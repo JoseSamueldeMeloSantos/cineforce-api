@@ -52,6 +52,9 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Cart cart;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserJwt credentials;
+
     public User(String nickName, String email, String bio, LocalDate birthDate) {
         this.nickName = nickName;
         this.email = email;
